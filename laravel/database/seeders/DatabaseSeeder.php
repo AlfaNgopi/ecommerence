@@ -20,14 +20,22 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 5; $i++) {
             $categories->push(ProductCategory::create([
                 'name' => fake()->unique()->word(),
-                
+
             ]));
         }
+
+        User::create([
+            'name' => "Admin",
+            'username' => 'admin',
+            'email' => fake()->unique()->safeEmail(),
+            'password' => bcrypt('admin'),
+        ]);
 
         // 2. Create Users with Stores and Products
         for ($i = 0; $i < 10; $i++) {
             $user = User::create([
                 'name' => fake()->name(),
+                'username' => fake()->unique()->userName(),
                 'email' => fake()->unique()->safeEmail(),
                 'password' => bcrypt('password'),
             ]);
@@ -43,12 +51,16 @@ class DatabaseSeeder extends Seeder
 
                 // Create Products for the Store
                 for ($p = 0; $p < 3; $p++) {
+
+                    $name = fake()->words(3, true);
+                    $link_name = strtolower(str_replace(' ', '-', $name));
                     $product = Product::create([
                         'store_id' => $store->id,
                         'category_id' => $categories->random()->id,
-                        'name' => fake()->words(3, true),
+                        'name' => $name,
+                        'link_name' => $link_name,
                         'description' => fake()->sentence(),
-                        
+
                     ]);
 
                     // Each product gets 2 variants
@@ -58,7 +70,7 @@ class DatabaseSeeder extends Seeder
                             'name' => fake()->word(),
                             'image_url' => fake()->imageUrl(),
                             'stock_quantity' => rand(10, 100),
-                            'price' => rand(10,100),
+                            'price' => rand(10, 100),
                         ]);
                     }
                 }
@@ -90,6 +102,7 @@ class DatabaseSeeder extends Seeder
             }
 
             $order->update(['total_price' => $total]);
-        };
+        }
+        ;
     }
 }
