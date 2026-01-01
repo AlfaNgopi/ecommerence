@@ -104,5 +104,9 @@ class DatabaseSeeder extends Seeder
             $order->update(['total_price' => $total]);
         }
         ;
+
+        // 4. seeding messages and conversations can be added here later
+
+
     }
 }
