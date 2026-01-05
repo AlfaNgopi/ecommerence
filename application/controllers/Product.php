@@ -31,6 +31,10 @@ class Product extends CI_Controller {
 	public function index($link_name)
 	{
 
+        // get user from session
+        $user_id = $this->session->userdata('user_id');
+        $user = $this->UserModel->fetchById($user_id);
+
         // get product from database
         $product = $this->ProductModel->fetchByLinkName($link_name);
         if ($product) {
@@ -42,9 +46,7 @@ class Product extends CI_Controller {
         }
 
 
-        // get user from session
-        $user_id = $this->session->userdata('user_id');
-        $user = $this->UserModel->fetchById($user_id);
+        
 
         $data = [
             'product' => $product,

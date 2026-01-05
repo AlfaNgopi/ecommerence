@@ -1,5 +1,10 @@
 ![alt text](db_arsitecture.png)
 
+rencana :
+
+![alt text](E_commerence.drawio.png)
+
+
 Type	    When to use it
 feat	    A new feature for the user.
 fix	        A bug fix.
